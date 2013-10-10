@@ -1,0 +1,226 @@
+C51 COMPILER V9.00   SMC162                                                                05/08/2013 14:58:51 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE SMC162
+OBJECT MODULE PLACED IN SMC162.obj
+COMPILER INVOKED BY: D:\Keil\C51\BIN\C51.EXE SMC162\SMC162.c BROWSE DEBUG OBJECTEXTEND PRINT(.\SMC162.lst) OBJECT(SMC162
+                    -.obj)
+
+line level    source
+
+   1          /*
+   2           *      Copyright (C) 2006, 华中科技大学电气与电子科技创新中心
+   3           *      All Rights Reserved.
+   4           *      
+   5           *      文件名:         smc162.c
+   6           *      文件描述:       16*2字符液晶驱动主文件
+   7           *                      
+   8           *      当前版本:       1.0
+   9           *      作者:           ZhangLi(zhangli.xing@gmail.com)
+  10           *      完成日期:       2005年12月12日
+  11           *      
+  12          */
+  13          #include "SMC162.h"
+  14          #include "reg51.h"
+  15          
+  16          /***************************************
+  17          说明:   LCD写函数,完成LCD写操作的物理时序
+  18          value:  写的具体值
+  19          RS:             0 - 写指令
+  20                          1 - 写数据
+  21          *****************************************/
+  22          void LcdWrite(unsigned char value , bit RS)
+  23          {
+  24   1              /* 1. 设置RS信号线 */
+  25   1              Lcd_RS = RS ;
+  26   1              /* 2. 设置RW信号线为读 */
+  27   1              Lcd_RW = 0 ;
+  28   1              /* 3. 设置LCD片选 */
+  29   1              SELECT_LCD();
+  30   1              /* 4. 通过P0端口写值 */
+  31   1              P0 = value ;
+  32   1              /* 5. 锁存 */
+  33   1              SELECT_NONE();
+  34   1      }
+  35          
+  36          /***************************************
+  37          说明:   LCD读函数,完成LCD读操作的物理时序
+  38          RS:             0 - 写指令
+  39                          1 - 写数据
+  40          return: 读出的具体值
+  41          *****************************************/
+  42          unsigned char LcdRead(bit RS)
+  43          {
+  44   1              unsigned char rt ;
+  45   1      
+  46   1              /* 1. 设置RS信号线 */
+  47   1              Lcd_RS = RS ;
+  48   1              /* 2. 设置RW信号线为读 */
+  49   1              Lcd_RW = 1 ;
+  50   1              /* 3. 释放P0口 */
+  51   1              P0 = 0xff ;
+  52   1              /* 4. 设置LCD片选 */
+  53   1              SELECT_LCD();
+  54   1              SELECT_LCD();
+C51 COMPILER V9.00   SMC162                                                                05/08/2013 14:58:51 PAGE 2   
+
+  55   1              SELECT_LCD();
+  56   1              SELECT_LCD();
+  57   1              /* 5. 通过P0端口读值 */
+  58   1              rt = P0 ;
+  59   1              /* 6. 锁存 */
+  60   1              SELECT_NONE();
+  61   1      
+  62   1              return rt ;
+  63   1      }       
+  64          
+  65          /***************************************
+  66          说明:   LCD写指令
+  67          value:  写的具体值
+  68          attrib: 0 - 不检测忙信号
+  69                          1 - 监测忙信号
+  70          *****************************************/
+  71          void LcdWriteCmd(unsigned char value , unsigned char attrib)
+  72          {
+  73   1              /* 监测忙状态 */
+  74   1              if(attrib)
+  75   1                      while( LcdRead(0)&0x80 ) ;
+  76   1              
+  77   1              LcdWrite(value , 0);
+  78   1       }
+  79          
+  80          /***************************************
+  81          说明:   LCD写数据
+  82          *****************************************/
+  83          void LcdWriteData(unsigned char value)
+  84          {
+  85   1              /* 监测忙状态 */
+  86   1              while( LcdRead(0)&0x80 ) ;
+  87   1      
+  88   1              LcdWrite(value , 1);
+  89   1      }
+  90          
+  91          /***************************************
+  92          说明:   LCD读数据
+  93          *****************************************/
+  94          unsigned char LcdReadData()
+  95          {
+  96   1              /* 监测忙状态 */
+  97   1              while( LcdRead(0)&0x80 ) ;
+  98   1      
+  99   1              return LcdRead(1);
+ 100   1      }
+ 101          
+ 102          /***************************************
+ 103          说明:   短延时, 5ms
+ 104          *****************************************/
+ 105          void Delay5Ms(void)
+ 106          {
+ 107   1              unsigned int i = 5552;
+ 108   1              while(i--);
+ 109   1      }
+ 110          
+ 111          /***************************************
+ 112          说明:   长延时 , 400ms
+ 113          *****************************************/
+ 114          void Delay400Ms(void)
+ 115          {
+ 116   1              unsigned char i = 80;
+C51 COMPILER V9.00   SMC162                                                                05/08/2013 14:58:51 PAGE 3   
+
+ 117   1              while(i--)
+ 118   1                      Delay5Ms();
+ 119   1      }
+ 120          /***************************************
+ 121          说明:   LCD初始化函数,需要按照产品
+ 122                  说明书完成
+ 123          *****************************************/
+ 124          void LcdInit(void)
+ 125          {
+ 126   1              Delay400Ms();   
+ 127   1      
+ 128   1              /* 写指令0x38连续3次, 不检测忙信号*/
+ 129   1              LcdWriteCmd(0x38 , 0 );
+ 130   1              Delay5Ms();
+ 131   1      
+ 132   1              LcdWriteCmd(0x38 , 0 );
+ 133   1              Delay5Ms();
+ 134   1      
+ 135   1              LcdWriteCmd(0x38 , 0 );
+ 136   1              Delay5Ms();
+ 137   1      
+ 138   1              /* 以后的读写操作均要判断忙信号 */
+ 139   1              LcdWriteCmd(0x38 , 1 );
+ 140   1              /* 先设置关屏 */
+ 141   1              LcdWriteCmd(0x08 , 1 );
+ 142   1              /* 清屏 */
+ 143   1              LcdWriteCmd(0x01 , 1 );
+ 144   1              /* 设置光标显示模式 */
+ 145   1              LcdWriteCmd(0x06 , 1 );
+ 146   1              /* 开屏并显示光标 */
+ 147   1              LcdWriteCmd(0x0c , 1 );
+ 148   1      }
+ 149          
+ 150          /***************************************
+ 151          说明:   设置光标定位
+ 152          *****************************************/
+ 153          void LocateXY(char x , char y)
+ 154          {
+ 155   1              unsigned char temp;
+ 156   1      
+ 157   1              temp = x & 0xf;
+ 158   1              y &= 0x1;
+ 159   1              if ( y )temp |= 0x40;
+ 160   1              temp |= 0x80;
+ 161   1              LcdWriteCmd(temp,1);
+ 162   1      }
+ 163          
+ 164          /***************************************
+ 165          说明:   显示字符
+ 166          x: 横坐标 y: 纵坐标
+ 167          value: 显示的字符
+ 168          *****************************************/
+ 169          void PutChar(char x , char y , char value)
+ 170          {
+ 171   1              LocateXY(x,y);
+ 172   1              LcdWriteData(value);
+ 173   1      }
+ 174          
+ 175          /***************************************
+ 176          说明:   显示字符串
+ 177          *****************************************/
+ 178          void PutStr(char x , char y , char* str)
+C51 COMPILER V9.00   SMC162                                                                05/08/2013 14:58:51 PAGE 4   
+
+ 179          {
+ 180   1              unsigned char i,len=0;
+ 181   1              /* 计算字符串长度 */
+ 182   1              while (str[len] >31)
+ 183   1                      len++;
+ 184   1              
+ 185   1              /* 显示字符串 */
+ 186   1              for (i=0;i<len;i++) 
+ 187   1              {
+ 188   2                      PutChar(x++,y,str[i]);
+ 189   2                      if ( x == 16 )
+ 190   2                      {
+ 191   3                              x = 0; y ^= 1;
+ 192   3                      }
+ 193   2              }
+ 194   1      }
+ 195          
+ 196          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    322    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       7
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       2
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

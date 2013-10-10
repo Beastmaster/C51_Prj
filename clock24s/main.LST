@@ -1,0 +1,165 @@
+C51 COMPILER V9.00   MAIN                                                                  05/08/2013 00:18:31 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Keil\C51\BIN\C51.EXE main.c ROM(SMALL) BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include"reg51.h"
+   2          #include"seg7.h"
+   3          #include <INTRINS.H>
+   4          
+   5          
+   6          sbit beep1=P1^4;
+   7          sbit pluse=P1^7;
+   8          
+   9          
+  10          unsigned char cs=0;                      //全局变量cs，位选
+  11          unsigned char dispram[4];
+  12          
+  13          
+  14          
+  15          void delay(unsigned char dly);            //延时函数
+  16          void beep();                            //蜂鸣器
+  17          void display();                         //显示函数
+  18          void break1();                          //暂停函数
+  19          
+  20          
+  21          
+  22          //主函数
+  23          int main(void)
+  24          {
+  25   1      
+  26   1               int clk=0 ;
+  27   1               int min,sec;              //定义分、秒
+  28   1      
+  29   1               min=0;
+  30   1               sec=0;
+  31   1               
+  32   1              dispram[0]=0;
+  33   1              dispram[1]=0;
+  34   1      
+  35   1              display();
+  36   1      
+  37   1              while(1)
+  38   1              {
+  39   2                      if(pluse==1)
+  40   2                              continue;
+  41   2                      else
+  42   2                              break;
+  43   2              }
+  44   1      
+  45   1               delay(180);
+  46   1      
+  47   1               while(1)
+  48   1               {
+  49   2                      clk++;                             //分频
+  50   2                      sec=clk/200;
+  51   2                      min=sec/10;
+  52   2      
+  53   2                      if(min==2)
+  54   2                      {
+  55   3                              if(sec%10==4)
+C51 COMPILER V9.00   MAIN                                                                  05/08/2013 00:18:31 PAGE 2   
+
+  56   3                         {    beep();
+  57   4                              dispram[0]=4;
+  58   4                              dispram[1]=2; }
+  59   3                      }
+  60   2      
+  61   2                      //显示  
+  62   2                      dispram[0] = sec%10;
+  63   2                      dispram[1] = min%10;
+  64   2                      dispram[2]=0;
+  65   2                      dispram[3]=0;
+  66   2                      display();
+  67   2      
+  68   2      
+  69   2                              //暂停
+  70   2                      if(pluse==0)
+  71   2                      {       
+  72   3                              delay(150);     
+  73   3                              while(1)
+  74   3                              {                               
+  75   4                                      display();
+  76   4                                      if(pluse==0)
+  77   4                                              {delay(150);
+  78   5                                              break;}
+  79   4                              }
+  80   3                      }
+  81   2      
+  82   2               }
+  83   1      }
+  84          
+  85          //延时函数
+  86          void delay(unsigned char dly)
+  87          {
+  88   1              unsigned char i, j;
+  89   1      
+  90   1              for(i=100; i>0; i--)
+  91   1                      for(j=dly; j>0; j--);
+  92   1      }
+  93          
+  94          //蜂鸣器
+  95          void beep()
+  96          {
+  97   1              beep1=1;
+  98   1              while(1)
+  99   1              {
+ 100   2                      beep1=~beep1;
+ 101   2                      delay(1);
+ 102   2              }
+ 103   1      }
+ 104          
+ 105          // 数码管显示
+ 106           void display()
+ 107          {
+ 108   1                      if(cs >= 3)
+ 109   1                              cs = 0;
+ 110   1              else
+ 111   1                              cs++;
+ 112   1          
+ 113   1                      WriteSegData(dispram[cs]);        //段选 写数据
+ 114   1              WriteCsData(1<<cs);               //位选  写数据
+ 115   1      
+ 116   1              delay(5);               
+ 117   1      }
+C51 COMPILER V9.00   MAIN                                                                  05/08/2013 00:18:31 PAGE 3   
+
+ 118          
+ 119          void break1()
+ 120          {
+ 121   1              if(pluse==1)
+ 122   1              {
+ 123   2                      delay(5);
+ 124   2                      while(1)
+ 125   2                      {
+ 126   3                              if(pluse==1)
+ 127   3                                      break;
+ 128   3                              else
+ 129   3                                      continue;
+ 130   3                      }
+ 131   2              }
+ 132   1              else
+ 133   1              ;
+ 134   1      }
+ 135          
+ 136          
+ 137          
+ 138          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    219    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

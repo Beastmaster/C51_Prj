@@ -1,0 +1,158 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/12/2013  17:50:53  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, main.obj, seg7.obj TO digit_clock RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  main.obj (MAIN)
+  seg7.obj (SEG7)
+  D:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  digit_clock (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     001AH     UNIT         ?PR?_WRITESEGDATA?SEG7
+            CODE    00A9H     0012H     UNIT         ?PR?_WRITECSDATA?SEG7
+            CODE    00BBH     0011H     UNIT         ?CO?SEG7
+            CODE    00CCH     0001H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   digit_clock (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?C_INITSEG
+
+
+
+UNRESOLVED EXTERNAL SYMBOLS:
+   MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  digit_clock (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0003H         SEGMENT       ?C_C51STARTUP
+  I:0008H         SEGMENT       ?STACK
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/12/2013  17:50:53  PAGE 2
+
+
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0006H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0003H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0003H         LINE#         133
+  C:0005H         LINE#         134
+  C:0006H         LINE#         135
+  C:0007H         LINE#         136
+  C:0009H         LINE#         185
+  C:000CH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        SEG7
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  C:008FH         PUBLIC        _WriteSegData
+  C:00BBH         PUBLIC        seg_code
+  C:00A9H         PUBLIC        _WriteCsData
+  -------         PROC          _WRITESEGDATA
+  D:0007H         SYMBOL        seg
+  C:008FH         LINE#         27
+  C:008FH         LINE#         28
+  C:008FH         LINE#         30
+  C:0095H         LINE#         31
+  C:0097H         LINE#         32
+  C:009CH         LINE#         34
+  C:009EH         LINE#         36
+  C:009FH         LINE#         37
+  C:00A0H         LINE#         39
+  C:00A3H         LINE#         41
+  C:00A4H         LINE#         42
+  C:00A5H         LINE#         44
+  C:00A8H         LINE#         45
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/12/2013  17:50:53  PAGE 3
+
+
+  -------         ENDPROC       _WRITESEGDATA
+  -------         PROC          _WRITECSDATA
+  D:0007H         SYMBOL        cs
+  C:00A9H         LINE#         51
+  C:00A9H         LINE#         52
+  C:00A9H         LINE#         54
+  C:00ACH         LINE#         56
+  C:00B0H         LINE#         58
+  C:00B1H         LINE#         59
+  C:00B2H         LINE#         61
+  C:00B5H         LINE#         63
+  C:00B6H         LINE#         64
+  C:00B7H         LINE#         66
+  C:00BAH         LINE#         67
+  -------         ENDPROC       _WRITECSDATA
+  -------         ENDMOD        SEG7
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_WRITESEGDATA?SEG7
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_WRITECSDATA?SEG7
+
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  MAIN
+    MODULE:  D:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  MAIN
+    MODULE:  D:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+    ADDRESS: 0010H
+
+Program Size: data=9.0 xdata=0 code=205
+LINK/LOCATE RUN COMPLETE.  4 WARNING(S),  0 ERROR(S)

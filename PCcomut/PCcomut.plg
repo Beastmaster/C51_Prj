@@ -1,0 +1,16 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\WORKPLACE\C51 workplace\PCcomut\PCcomut.uvproj
+Project File Date:  07/28/2013
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling min.c...
+linking...
+Program Size: data=114.0 xdata=0 code=573
+creating hex file from "PCcomut"...
+"PCcomut" - 0 Error(s), 0 Warning(s).

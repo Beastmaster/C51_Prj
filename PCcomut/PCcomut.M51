@@ -1,0 +1,226 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        08/02/2013  23:34:33  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, min.obj TO PCcomut RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  min.obj (MIN)
+  D:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+  D:\KEIL\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  D:\KEIL\C51\LIB\C51S.LIB (?C?UIDIV)
+
+
+LINK MAP OF MODULE:  PCcomut (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0066H     UNIT         ?DT?MIN
+            DATA    006EH     0003H     UNIT         _DATA_GROUP_
+            IDATA   0071H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+            CODE    0006H     0016H     UNIT         ?PR?_DELAY?MIN
+            CODE    001CH     0004H     UNIT         ?C_INITSEG
+                    0020H     0003H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     008CH     UNIT         ?C_C51STARTUP
+            CODE    00B2H     0082H     UNIT         ?C?LIB_CODE
+            CODE    0134H     005EH     UNIT         ?PR?SERIAL_INT?MIN
+            CODE    0192H     0051H     UNIT         ?PR?EX_INT0?MIN
+            CODE    01E3H     0048H     UNIT         ?PR?MAIN?MIN
+            CODE    022BH     0015H     UNIT         ?CO?MIN
+
+
+
+OVERLAY MAP OF MODULE:   PCcomut (?C_STARTUP)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?MIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MIN                   -----    -----
+  +--> ?CO?MIN
+  +--> ?PR?_DELAY?MIN
+
+*** NEW ROOT ***************************************************
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/02/2013  23:34:33  PAGE 2
+
+
+
+?PR?EX_INT0?MIN                006EH    0003H
+  +--> ?CO?MIN
+
+
+
+SYMBOL TABLE OF MODULE:  PCcomut (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0026H         SEGMENT       ?C_C51STARTUP
+  I:0071H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0029H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0026H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0026H         LINE#         133
+  C:0028H         LINE#         134
+  C:0029H         LINE#         135
+  C:002AH         LINE#         136
+  C:002CH         LINE#         185
+  C:002FH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  B:00A8H.7       PUBLIC        EA
+  D:0008H         PUBLIC        receive_buf
+  C:0006H         PUBLIC        _delay
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:01E3H         PUBLIC        main
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/02/2013  23:34:33  PAGE 3
+
+
+  C:0134H         PUBLIC        serial_int
+  D:0099H         PUBLIC        SBUF
+  D:0087H         PUBLIC        PCON
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:006DH         PUBLIC        buf_index
+  C:023EH         PUBLIC        dis_code
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  D:008DH         PUBLIC        TH1
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  C:0192H         PUBLIC        EX_int0
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        ms
+  -------         DO            
+  D:0005H         SYMBOL        i
+  -------         ENDDO         
+  C:0006H         LINE#         10
+  C:0006H         LINE#         11
+  C:0006H         LINE#         13
+  C:0010H         LINE#         14
+  C:001BH         LINE#         15
+  -------         ENDPROC       _DELAY
+  -------         PROC          MAIN
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:01E3H         LINE#         17
+  C:01E3H         LINE#         18
+  C:01E3H         LINE#         20
+  C:01E6H         LINE#         21
+  C:01E9H         LINE#         22
+  C:01ECH         LINE#         23
+  C:01EFH         LINE#         24
+  C:01F2H         LINE#         25
+  C:01F5H         LINE#         26
+  C:01F7H         LINE#         27
+  C:01FDH         LINE#         28
+  C:0202H         LINE#         29
+  C:0204H         LINE#         30
+  C:0204H         LINE#         31
+  C:0204H         LINE#         32
+  C:0206H         LINE#         33
+  C:0206H         LINE#         34
+  C:0210H         LINE#         35
+  C:0210H         LINE#         36
+  C:0217H         LINE#         37
+  C:021EH         LINE#         38
+  C:0222H         LINE#         39
+  C:0229H         LINE#         40
+  -------         ENDPROC       MAIN
+  -------         PROC          SERIAL_INT
+  -------         DO            
+  D:0007H         SYMBOL        c
+  -------         ENDDO         
+  C:0134H         LINE#         46
+BL51 BANKED LINKER/LOCATER V6.22                                                      08/02/2013  23:34:33  PAGE 4
+
+
+  C:0147H         LINE#         49
+  C:014AH         LINE#         51
+  C:014CH         LINE#         52
+  C:014EH         LINE#         53
+  C:0150H         LINE#         54
+  C:015CH         LINE#         55
+  C:015CH         LINE#         56
+  C:0167H         LINE#         57
+  C:016EH         LINE#         58
+  C:017FH         LINE#         59
+  C:017FH         LINE#         60
+  C:0181H         LINE#         61
+  -------         ENDPROC       SERIAL_INT
+  -------         PROC          EX_INT0
+  -------         DO            
+  D:006EH         SYMBOL        s
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:0192H         LINE#         63
+  C:01A9H         LINE#         65
+  C:01B2H         LINE#         66
+  C:01B4H         LINE#         67
+  C:01C4H         LINE#         68
+  C:01C4H         LINE#         69
+  C:01C6H         LINE#         70
+  C:01C9H         LINE#         71
+  C:01CBH         LINE#         72
+  C:01CCH         LINE#         73
+  C:01CEH         LINE#         74
+  -------         ENDPROC       EX_INT0
+  -------         ENDMOD        MIN
+
+  -------         MODULE        ?C?CLDOPTR
+  C:00B2H         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?UIDIV
+  C:00DFH         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+Program Size: data=114.0 xdata=0 code=573
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

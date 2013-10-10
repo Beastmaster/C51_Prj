@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"min.obj" 
+TO "PCcomut" 
+RAMSIZE(256) 

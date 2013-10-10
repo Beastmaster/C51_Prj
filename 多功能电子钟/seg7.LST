@@ -1,0 +1,92 @@
+C51 COMPILER V9.00   SEG7                                                                  05/12/2013 17:50:53 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE SEG7
+OBJECT MODULE PLACED IN seg7.OBJ
+COMPILER INVOKED BY: D:\Keil\C51\BIN\C51.EXE seg7.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*
+   2           *      Copyright (C) 2006, 华中科技大学电气与电子科技创新中心
+   3           *      All Rights Reserved.
+   4           *      
+   5           *      文件名:         seg7.c
+   6           *      文件描述:       8段数码管驱动主程序文件
+   7           *                      
+   8           *      当前版本:       1.0
+   9           *      作者:           SangWei(swkyer@gmail.com)
+  10           *      完成日期:       2005年12月12日
+  11           *      
+  12          */
+  13          #include <reg51.h>
+  14          #include <INTRINS.H>
+  15          #include "seg7.h"
+  16          
+  17          
+  18          /* 段码表 */
+  19          unsigned char code seg_code[] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F,    // 0--9
+  20                                                                           0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71, 0x00};     // A, b, C, d, E, F, 消隐
+  21          
+  22          
+  23          /**************************************
+  24          说明:   写段码数据
+  25          seg:    待显示的段码数据, 0-9, A-F
+  26          **************************************/
+  27          void WriteSegData(unsigned char seg)
+  28          {
+  29   1              /* 越界判断，并查找对应的段码 */
+  30   1              if(seg > 16)
+  31   1                      seg = 16;
+  32   1              seg = seg_code[seg];
+  33   1              /* 将段码数据送到数据总线上 */
+  34   1              P0 = seg;
+  35   1              /* 等待数据稳定 */
+  36   1              _nop_();
+  37   1              _nop_();
+  38   1              /* P2.5-P2.7 = 000, 控制138译码器，使片选信号CS0=0 */
+  39   1              P2 &= 0x1F;
+  40   1              /* 延时，维持CS0为低电平 */
+  41   1              _nop_();
+  42   1              _nop_();
+  43   1              /* P2.5-P2.7 = 111, CS0=1, 产生上升延脉冲，将数据总线上的数据锁存 */
+  44   1              P2 |= 0xE0;
+  45   1      }
+  46          
+  47          /**************************************
+  48          说明:   写位选数据
+  49          cs:             cs低四位为位选位，1: 有效，0: 无效
+  50          **************************************/
+  51          void WriteCsData(unsigned char cs)
+  52          {
+  53   1              /* 低四位有效，屏蔽高四位 */
+  54   1              cs &= 0x0F;
+  55   1              /* cs信号为低有效，将cs反向后送入数据总线 */
+C51 COMPILER V9.00   SEG7                                                                  05/12/2013 17:50:53 PAGE 2   
+
+  56   1              P0 = ~cs;
+  57   1              /* 等待数据稳定 */
+  58   1              _nop_();
+  59   1              _nop_();
+  60   1              /* P2.5 = 0, P2.6-P2.7 = 0, 控制138译码器，使片选信号CS1 = 0 */
+  61   1              P2 &= 0x3F;
+  62   1              /* 延时，维持CS1为低电平 */
+  63   1              _nop_();
+  64   1              _nop_();
+  65   1              /* P2.5-P2.7 = 111, CS0=1, 产生上升延脉冲，将数据总线上的数据锁存 */
+  66   1              P2 |= 0xE0;
+  67   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     44    ----
+   CONSTANT SIZE    =     17    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

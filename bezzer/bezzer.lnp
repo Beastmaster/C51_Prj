@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"bezzer.obj",
+"SMC162.obj" 
+TO "bezzer" 
+RAMSIZE(256) 

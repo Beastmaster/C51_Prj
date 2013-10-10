@@ -1,0 +1,39 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\WORKPLACE\C51 workplace\Ò¡Ò¡°ô\shake_prj.uvproj
+Project File Date:  05/10/2013
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+main.c(1): warning C318: can't open file 'reg.h'
+MAIN.C(145): error C202: 'P0': undefined identifier
+MAIN.C(146): error C202: 'P2': undefined identifier
+MAIN.C(158): error C202: 'P0': undefined identifier
+MAIN.C(159): error C202: 'P2': undefined identifier
+MAIN.C(171): error C202: 'P0': undefined identifier
+MAIN.C(172): error C202: 'P2': undefined identifier
+MAIN.C(184): error C202: 'P0': undefined identifier
+MAIN.C(185): error C202: 'P2': undefined identifier
+MAIN.C(193): error C202: 'IT0': undefined identifier
+MAIN.C(194): error C202: 'EX0': undefined identifier
+MAIN.C(195): error C202: 'EA': undefined identifier
+MAIN.C(199): error C202: 'P3_0': undefined identifier
+MAIN.C(202): error C202: 'P3_0': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+MAIN.C(199): error C202: 'P3_0': undefined identifier
+MAIN.C(202): error C202: 'P3_0': undefined identifier
+Target not created
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+linking...
+Program Size: data=21.0 xdata=0 code=1309
+"shake_prj" - 0 Error(s), 0 Warning(s).

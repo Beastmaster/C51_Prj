@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"main.obj" 
+TO "shake_prj" 
+RAMSIZE(256) 

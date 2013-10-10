@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"main.obj",
+"seg7.obj" 
+TO "clk24s_prj" 
+RAMSIZE(256) 

@@ -1,0 +1,112 @@
+C51 COMPILER V9.00   MIN                                                                   08/02/2013 23:34:32 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MIN
+OBJECT MODULE PLACED IN min.OBJ
+COMPILER INVOKED BY: D:\Keil\C51\BIN\C51.EXE min.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          uchar receive_buf[101];
+   5          uchar buf_index=0;
+   6          
+   7          //SEG
+   8          uchar code dis_code[]={0,9};
+   9          
+  10          void delay(uint ms)
+  11          {
+  12   1              uchar i;
+  13   1              while(ms--)
+  14   1                      for(i=0;i<120;i++);
+  15   1      }
+  16          
+  17          void main()
+  18          {
+  19   1              uchar i;
+  20   1              P0=0x00;
+  21   1              receive_buf[0]=1;
+  22   1              SCON=0X50; //串口模式1，允许接收
+  23   1              TMOD=0x20; //T1工作模式2
+  24   1              TH1=0xfd;  //波特率9600
+  25   1              TL1=0xfd;
+  26   1              PCON=0x00; //波特率不倍增
+  27   1              EA=0;EX0=1;IT0=1;
+  28   1              ES=1;IP=0X01;
+  29   1              TR1=1;
+  30   1              while(1)
+  31   1              {
+  32   2                      for(i=0;i<100;i++)
+  33   2                      {
+  34   3                              if(receive_buf[i]==1) 
+  35   3                                      break;
+  36   3                               P1=dis_code[receive_buf[i]];
+  37   3                               delay(200);
+  38   3                      }
+  39   2                      delay(200);
+  40   2              }
+  41   1      
+  42   1      }
+  43          
+  44          
+  45          //串口接收中断函数
+  46          void serial_int() interrupt 4
+  47          {
+  48   1              uchar c;
+  49   1              if(RI==0) 
+  50   1                      return;
+  51   1               ES=0;
+  52   1               RI=0;
+  53   1               c=SBUF;
+  54   1               if(c>='0'&&c<='9')
+  55   1               {
+C51 COMPILER V9.00   MIN                                                                   08/02/2013 23:34:32 PAGE 2   
+
+  56   2                      receive_buf[buf_index]=c-'0';
+  57   2                      receive_buf[buf_index+1]=-1;
+  58   2                      buf_index=(buf_index+1)%100;
+  59   2               }
+  60   1               ES=1;
+  61   1      }
+  62          
+  63          void EX_int0() interrupt 0
+  64          {
+  65   1              uchar *s="这是发送的字符串\r\n";
+  66   1              uchar i=0;
+  67   1              while(s[i]!='\0')
+  68   1              {
+  69   2                      SBUF=s[i];
+  70   2                      while(TI==0);
+  71   2                      TI=0;
+  72   2                      i++;
+  73   2              }
+  74   1      }
+  75          
+  76          
+  77          
+  78          
+  79          
+  80          
+  81          
+  82          
+  83          
+  84          
+  85          
+  86          
+  87          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    269    ----
+   CONSTANT SIZE    =     21    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =    102       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

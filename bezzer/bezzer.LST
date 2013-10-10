@@ -1,0 +1,47 @@
+C51 COMPILER V9.00   BEZZER                                                                05/08/2013 14:58:51 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE BEZZER
+OBJECT MODULE PLACED IN bezzer.OBJ
+COMPILER INVOKED BY: D:\Keil\C51\BIN\C51.EXE bezzer.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          #include"SMC162.h"
+   4          
+   5          
+   6          #define BEEP_PIN 0x10
+   7          #define DELAY_TIME 50
+   8          
+   9          void delay(unsigned char dly)
+  10          {
+  11   1              unsigned char j;
+  12   1              for(j=dly;j>0;j--)
+  13   1                      ;
+  14   1      }
+  15          
+  16          void main(void)
+  17          {
+  18   1              while(1)
+  19   1              {
+  20   2                      P1^=BEEP_PIN;
+  21   2                      delay(DELAY_TIME);
+  22   2                      PutStr(0 , 1 , "chastr");
+  23   2              }
+  24   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     33    ----
+   CONSTANT SIZE    =      7    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,178 @@
+C51 COMPILER V9.00   MAIN                                                                  03/22/2013 17:03:18 PAGE 1   
+
+
+C51 COMPILER V9.00, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: D:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+*** WARNING C500 IN LINE 1 OF MAIN.C: LICENSE ERROR (R208: RENEW LICENSE ID CODE (LIC))
+
+   1          /*
+   2           *      Copyright (C) 2006, 华中科技大学电气与电子科技创新中心
+   3           *      All Rights Reserved.
+   4           *      
+   5           *      文件名:         main.c
+   6           *      文件描述:       8段数码管测试程序主文件
+   7           *                      
+   8           *      当前版本:       1.0
+   9           *      作者:           SangWei(swkyer@gmail.com)
+  10           *      完成日期:       2005年12月12日
+  11           *      
+  12          */
+  13          
+  14          
+  15          
+  16          //没有用定时器
+  17          
+  18          #include <reg51.h>
+  19          #include <INTRINS.H>
+  20          #include "..\seg7\seg7.h"
+  21          #include "..\key1\main.h"
+*** WARNING C318 IN LINE 21 OF main.c: can't open file '..\key1\main.h'
+  22          
+  23          /* 定时时间高低字节数据 */
+  24          #define TIMERH          0xEF
+  25          #define TIMERL          0xFF
+  26          
+  27          unsigned char cs=0;                      //全局变量cs，位选
+  28          unsigned char dispram[4];
+  29          
+  30          //void delay(unsigned char dly);   //头文件main.h中
+  31          
+  32          //void InitTimer(void);
+  33           
+  34          void display(); 
+  35           //显示函数
+  36           void display()
+  37          {
+  38   1                      if(cs >= 3)
+  39   1                              cs = 0;
+  40   1              else
+  41   1                              cs++;
+  42   1          
+  43   1                      WriteSegData(dispram[cs]);        //段选 写数据
+  44   1              WriteCsData(1<<cs);               //位选  写数据
+  45   1      
+  46   1              delay(5);
+  47   1                      
+  48   1      }
+  49          
+  50          
+  51          
+  52          
+  53          
+C51 COMPILER V9.00   MAIN                                                                  03/22/2013 17:03:18 PAGE 2   
+
+  54          void main(void)
+  55          {
+  56   1              int x=0,y=0;
+  57   1              P0 = 0xFF;
+  58   1              P2 = 0xFF;
+  59   1      
+  60   1      //      InitTimer();
+  61   1      
+  62   1              /* 启动定时器1 */
+  63   1      //      TR1 = 1;
+  64   1      
+  65   1              dispram[0] = 0;
+  66   1              dispram[1] = 8;
+  67   1              dispram[2] = 7;
+  68   1              dispram[3] = 9;
+  69   1              
+  70   1              while(1)
+  71   1              {
+  72   2      
+  73   2              display();
+  74   2              
+  75   2      //      if(keyscan()) 
+  76   2      //        dispram[0]++;
+  77   2      
+  78   2         /*   if(cs >= 3)
+  79   2                      cs = 0;
+  80   2              else
+  81   2                      cs++;
+  82   2              WriteSegData(dispram[cs]);        //段选 写数据
+  83   2              WriteCsData(1<<cs);               //位选  写数据
+  84   2      
+  85   2              delay(5);                */
+  86   2              
+  87   2               }
+  88   1               ;
+  89   1      /*      {
+  90   1                      dispram[x++]++;
+  91   1                      delay();
+  92   1                      if(x==3)
+  93   1                              x=0;
+  94   1              };      */
+  95   1      }
+  96          
+  97          /**************************************
+  98          说明:   简单延时程序  
+  99          dly:    延时时间参数
+ 100          **************************************/
+ 101          void delay(unsigned char dly)
+ 102          {
+ 103   1              unsigned char i, j;
+ 104   1      
+ 105   1              for(i=10; i>0; i--)
+ 106   1                      for(j=dly; j>0; j--);
+ 107   1      }
+ 108          
+ 109          
+ 110          /**************************************
+ 111          说明:   定时器初始化
+ 112                          定时时间10mS
+ 113          **************************************/
+ 114          /* 
+ 115          void InitTimer(void)
+C51 COMPILER V9.00   MAIN                                                                  03/22/2013 17:03:18 PAGE 3   
+
+ 116          {
+ 117                  // 变量初始化 
+ 118                  cs = 0;
+ 119                  dispram[0] = dispram[1] = dispram[2] = dispram[3] = 0;
+ 120                  // 初始化定时器，定时时间10mS，允许定时器中断 
+ 121                  TMOD = 0x90;
+ 122                  TH1 = TIMERH;
+ 123                  TL1 = TIMERL;
+ 124          //       开定时器中断 
+ 125                  EA = 1;
+ 126                  ET1 = 1;
+ 127          }       */               
+ 128          
+ 129          /**************************************
+ 130          说明:   定时器中断处理函数
+ 131          **************************************/
+ 132          /*
+ 133          void Timer1ISR(void) interrupt 3 using 2
+ 134          {
+ 135                  // 定时器重装 
+ 136                  TH1 = TIMERH;
+ 137                  TL1 = TIMERL;
+ 138                  //* 清中断标志 
+ 139                  TF1 = 0;
+ 140                  // 循环显示 
+ 141                  if(cs >= 3)
+ 142                          cs = 0;
+ 143                  else
+ 144                          cs++;
+ 145                  WriteSegData(dispram[cs]);        //段选 写数据
+ 146                  WriteCsData(1<<cs);               //位选  写数据
+ 147          }
+ 148                    */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     93    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

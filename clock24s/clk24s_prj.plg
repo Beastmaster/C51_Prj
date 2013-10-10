@@ -1,0 +1,19 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+D:\WORKPLACE\C51 workplace\clock24s\clk24s_prj.uvproj
+Project File Date:  05/06/2013
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling main.c...
+compiling seg7.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?BREAK1?MAIN
+Program Size: data=20.0 xdata=0 code=566
+creating hex file from "clk24s_prj"...
+"clk24s_prj" - 0 Error(s), 1 Warning(s).

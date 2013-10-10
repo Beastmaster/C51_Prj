@@ -1,0 +1,6 @@
+"STARTUP.obj",
+"main.obj",
+".\seg7.obj",
+".\key.obj" 
+TO "seg7" 
+RAMSIZE(256) 

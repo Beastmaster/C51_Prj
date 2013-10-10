@@ -1,0 +1,237 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        03/22/2013  17:03:19  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, main.obj, .\seg7.obj, .\key.obj TO seg7 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  main.obj (MAIN)
+  .\seg7.obj (SEG7)
+  .\key.obj (KEY)
+  D:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  seg7 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0005H     UNIT         ?DT?MAIN
+            DATA    000DH     0004H     UNIT         _DATA_GROUP_
+            IDATA   0011H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     002EH     UNIT         ?PR?DISPLAY?MAIN
+            CODE    08BAH     001FH     UNIT         ?PR?MAIN?MAIN
+            CODE    08D9H     001AH     UNIT         ?PR?_WRITESEGDATA?SEG7
+            CODE    08F3H     0016H     UNIT         ?PR?KEYSCAN?KEY
+            CODE    0909H     0012H     UNIT         ?PR?_WRITECSDATA?SEG7
+            CODE    091BH     0011H     UNIT         ?CO?SEG7
+            CODE    092CH     0010H     UNIT         ?PR?_DELAY?MAIN
+            CODE    093CH     0004H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   seg7 (?C_STARTUP)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                  000DH    0004H
+  +--> ?PR?DISPLAY?MAIN
+
+?PR?DISPLAY?MAIN               -----    -----
+  +--> ?PR?_WRITESEGDATA?SEG7
+  +--> ?PR?_WRITECSDATA?SEG7
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/22/2013  17:03:19  PAGE 2
+
+
+  +--> ?PR?_DELAY?MAIN
+
+?PR?_WRITESEGDATA?SEG7         -----    -----
+  +--> ?CO?SEG7
+
+
+
+SYMBOL TABLE OF MODULE:  seg7 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0800H         SEGMENT       ?C_C51STARTUP
+  I:0011H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0803H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0800H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         92
+  C:0800H         LINE#         99
+  C:0802H         LINE#         100
+  C:0803H         LINE#         101
+  C:0804H         LINE#         102
+  C:0806H         LINE#         151
+  C:0809H         LINE#         155
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  C:092CH         PUBLIC        _delay
+  C:08BAH         PUBLIC        main
+  D:0008H         PUBLIC        cs
+  D:0009H         PUBLIC        dispram
+  C:088CH         PUBLIC        display
+  -------         PROC          DISPLAY
+  C:088CH         LINE#         36
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/22/2013  17:03:19  PAGE 3
+
+
+  C:088CH         LINE#         37
+  C:088CH         LINE#         38
+  C:0893H         LINE#         39
+  C:0898H         LINE#         41
+  C:089AH         LINE#         43
+  C:08A4H         LINE#         44
+  C:08B5H         LINE#         46
+  -------         ENDPROC       DISPLAY
+  -------         PROC          MAIN
+  -------         DO            
+  D:000DH         SYMBOL        x
+  D:000FH         SYMBOL        y
+  -------         ENDDO         
+  C:08BAH         LINE#         54
+  C:08BAH         LINE#         55
+  C:08BAH         LINE#         56
+  C:08C3H         LINE#         57
+  C:08C6H         LINE#         58
+  C:08C9H         LINE#         65
+  C:08CBH         LINE#         66
+  C:08CEH         LINE#         67
+  C:08D1H         LINE#         68
+  C:08D4H         LINE#         70
+  C:08D4H         LINE#         71
+  C:08D4H         LINE#         73
+  C:08D7H         LINE#         87
+  -------         ENDPROC       MAIN
+  -------         PROC          _DELAY
+  D:0007H         SYMBOL        dly
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0005H         SYMBOL        j
+  -------         ENDDO         
+  C:092CH         LINE#         101
+  C:092CH         LINE#         102
+  C:092CH         LINE#         105
+  C:092EH         LINE#         106
+  C:093BH         LINE#         107
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        SEG7
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  C:08D9H         PUBLIC        _WriteSegData
+  C:091BH         PUBLIC        seg_code
+  C:0909H         PUBLIC        _WriteCsData
+  -------         PROC          _WRITESEGDATA
+  D:0007H         SYMBOL        seg
+  C:08D9H         LINE#         27
+  C:08D9H         LINE#         28
+  C:08D9H         LINE#         30
+  C:08DFH         LINE#         31
+  C:08E1H         LINE#         32
+  C:08E6H         LINE#         34
+  C:08E8H         LINE#         36
+BL51 BANKED LINKER/LOCATER V6.22                                                      03/22/2013  17:03:19  PAGE 4
+
+
+  C:08E9H         LINE#         37
+  C:08EAH         LINE#         39
+  C:08EDH         LINE#         42
+  C:08EEH         LINE#         43
+  C:08EFH         LINE#         46
+  C:08F2H         LINE#         47
+  -------         ENDPROC       _WRITESEGDATA
+  -------         PROC          _WRITECSDATA
+  D:0007H         SYMBOL        cs
+  C:0909H         LINE#         53
+  C:0909H         LINE#         54
+  C:0909H         LINE#         56
+  C:090CH         LINE#         58
+  C:0910H         LINE#         61
+  C:0911H         LINE#         62
+  C:0912H         LINE#         65
+  C:0915H         LINE#         67
+  C:0916H         LINE#         68
+  C:0917H         LINE#         70
+  C:091AH         LINE#         71
+  -------         ENDPROC       _WRITECSDATA
+  -------         ENDMOD        SEG7
+
+  -------         MODULE        KEY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  C:08F3H         PUBLIC        keyscan
+  -------         PROC          KEYSCAN
+  C:08F3H         LINE#         6
+  C:08F3H         LINE#         7
+  C:08F3H         LINE#         8
+  C:08F3H         LINE#         9
+  C:08F3H         LINE#         10
+  C:08F7H         LINE#         11
+  C:08F7H         LINE#         12
+  C:08FCH         LINE#         13
+  C:0900H         LINE#         14
+  C:0905H         LINE#         17
+  C:0905H         LINE#         18
+  C:0908H         LINE#         19
+  C:0908H         LINE#         21
+  -------         ENDPROC       KEYSCAN
+  -------         ENDMOD        KEY
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEYSCAN?KEY
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00C2H BYTE ( 9%) *
+******************************************************************************
+
+Program Size: data=18.0 xdata=0 code=323
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)
